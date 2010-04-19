@@ -1,22 +1,30 @@
 package net.tackley
 
 import javax.servlet._
-import javax.servlet.http.{HttpServletRequest}
+import javax.servlet.http.{HttpServletResponse, HttpServletRequest}
 
-class DispatcherFilter extends Filter {
+abstract class DispatcherFilter extends Filter {
   def init(config: FilterConfig) {}
 
-  def doFilter(request: ServletRequest, response: ServletResponse, chain: FilterChain) {
-    val r = request.asInstanceOf[HttpServletRequest]
+  def doFilter(request: ServletRequest, servletResponse: ServletResponse, chain: FilterChain) {
+    val httpRequest = request.asInstanceOf[HttpServletRequest]
+    val httpResponse = servletResponse.asInstanceOf[HttpServletResponse]
 
-    println("doFilter running! '"+ r.getContextPath + "'")
+    val response = dispatcher.dispatch(new Request(httpRequest))
 
-    println("requestUrl='" + r.getRequestURL + "'")
-    println("requestUrI='" + r.getRequestURI + "'")
-    println("getServletPath='" + r.getServletPath + "'")
-    chain.doFilter(request, response)
+    if (response.isDefined) {
+      response.foreach(_.applyTo(httpResponse))
+    } else {
+      chain.doFilter(request, servletResponse)
+    }
   }
 
   def destroy() {}
 
+  def dispatcher: Dispatcher
+}
+
+
+class ExampleFilter extends DispatcherFilter {
+  val dispatcher = new ExampleDispatcher
 }
