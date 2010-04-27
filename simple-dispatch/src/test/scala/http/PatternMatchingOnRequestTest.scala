@@ -1,11 +1,14 @@
-package net.tackley.http
+package http
 
-import org.scalatest.FunSuite
-import org.scalatest.matchers.ShouldMatchers
+
+import org.scalatest.{FunSuite}
+import org.scalatest.matchers.{ShouldMatchers}
 
 class RequestLikeThing(val unmatchedPath: String) {
   def path = unmatchedPath.split('/').toList
 }
+
+
 
 object Path {
   def unapplySeq(r: RequestLikeThing) =
@@ -13,6 +16,8 @@ object Path {
 }
 
 class PatternMatchingOnRequestTest extends FunSuite with ShouldMatchers {
+//  implicit def r2path(r: RequestLikeThing) = r.path
+
   test("this is some test") {
     workaroundToScalaBug
   }
@@ -30,9 +35,9 @@ class PatternMatchingOnRequestTest extends FunSuite with ShouldMatchers {
       case _ => println("no match")
     }
 
-    r match {
-      case "one" :: tail => println("matched, tail: "+ tail)
-      case _ => println("no match")
-    }
+//    r match {
+//      case "one" :: tail => println("matched, tail: "+ tail)
+//      case _ => println("no match")
+//    }
   }
 }
