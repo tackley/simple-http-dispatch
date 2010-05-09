@@ -16,7 +16,7 @@ object Path {
 }
 
 class PatternMatchingOnRequestTest extends FunSuite with ShouldMatchers {
-//  implicit def r2path(r: RequestLikeThing) = r.path
+//  implicit def r2path(r: RequestLikeThing) = r.stringPath
 
   test("this is some test") {
     workaroundToScalaBug

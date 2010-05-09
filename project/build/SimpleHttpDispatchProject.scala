@@ -10,6 +10,7 @@ class SimpleHttpDispatchProject(info: ProjectInfo) extends ParentProject(info) w
   class SimpleDispatchProject(info: ProjectInfo) extends DefaultProject(info) with IdeaPlugin {
     val servlet = "javax.servlet" % "servlet-api" % "2.5" withSources()
     val scalaTest = "org.scalatest" % "scalatest" % "1.0.1-for-scala-2.8.0.RC1-SNAPSHOT" % "test" withSources()
+    val mockito = "org.mockito" % "mockito-core" % "1.8.4" % "test" withSources()
   }
 
   class ExampleWebAppProject(info: ProjectInfo) extends DefaultWebProject(info) with IdeaPlugin {
